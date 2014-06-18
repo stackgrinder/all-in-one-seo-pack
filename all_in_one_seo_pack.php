@@ -81,14 +81,18 @@ $aioseop_mem_limit = @ini_get( 'memory_limit' );
 if ( !function_exists( 'aioseop_convert_bytestring' ) ) {
 	function aioseop_convert_bytestring( $byteString ) {
 		preg_match( '/^\s*([0-9.]+)\s*([KMGTPE])B?\s*$/i', $byteString, $matches );
-		$num = ( float )$matches[1];
-		switch ( strtoupper( $matches[2] ) ) {
-			case 'E': $num = $num * 1024;
-			case 'P': $num = $num * 1024;
-			case 'T': $num = $num * 1024;
-			case 'G': $num = $num * 1024;
-			case 'M': $num = $num * 1024;
-			case 'K': $num = $num * 1024;
+		if(count($matches) > 1)
+		{
+			$num = ( float )$matches[1];
+			switch ( strtoupper( $matches[2] ) ) {
+				case 'E': $num = $num * 1024;
+				case 'P': $num = $num * 1024;
+				case 'T': $num = $num * 1024;
+				case 'G': $num = $num * 1024;
+				case 'M': $num = $num * 1024;
+				case 'K': $num = $num * 1024;
+			}
+			return intval( $num );
 		}
 		return intval( $num );
 	}
